@@ -82,7 +82,7 @@ if len(sys.argv) > 1:
         print "freemem.label Free Memory"
         config = True
 else:
-    print "maxmem.value " + a[2].split("\xa7c ")[1].replace(" MB","")
-    print "allocmem.value " + a[3].split("\xa7c ")[1].replace(" MB","")
-    print "freemem.value " + a[4].split("\xa7c ")[1].replace(" MB","")
+    print "maxmem.value " + a[2].split("\xa7c ")[1].replace(" MB.","").replace(",", "")
+    print "allocmem.value " + a[3].split("\xa7c ")[1].replace(" MB.","").replace(",", "")
+    print "freemem.value " + a[4].split("\xa7c ")[1].replace(" MB.","").replace(",", "")
 

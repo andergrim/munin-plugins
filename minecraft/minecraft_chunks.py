@@ -86,9 +86,9 @@ for b in a[5:-1]:
     if enttype == "World":
       world_name = b.split(":")[0].split(" ")[1].replace("\"\xc2\xa7c", "").replace("\xc2\xa76\"", "")
       world_data = b.split(":")[1].split(", ");
-      chunks = world_data[0].replace("\xc2\xa7c", "").replace("\xc2\xa76 chunks", "")
-      entities = world_data[1].replace("\xc2\xa7c", "").replace("\xc2\xa76 entities", "")
-      tiles = world_data[2].replace("\xc2\xa7c", "").replace("\xc2\xa76 tiles.", "")
+      chunks = world_data[0].replace("\xc2\xa7c", "").replace("\xc2\xa76 chunks", "").replace(",", "")
+      entities = world_data[1].replace("\xc2\xa7c", "").replace("\xc2\xa76 entities", "").replace(",", "")
+      tiles = world_data[2].replace("\xc2\xa7c", "").replace("\xc2\xa76 tiles.", "").replace(",", "")
       if config:
         print world_name + ".label " + world_name
       else:
