@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/local/bin/python
+# Change to /usr/bin/env python if other os than FreeBSD
 import sys
 import os
 import socket

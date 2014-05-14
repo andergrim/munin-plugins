@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/local/bin/python
+# Change to /usr/bin/env python if other os than FreeBSD
 import sys
 import os
 import socket
@@ -81,11 +82,14 @@ if len(sys.argv) > 1:
         config = True
 
 for b in a[5:-1]:
-    world_name = b.split(":")[0].split("\"\xa7c")[1].replace("\xa76\"","")
-    world_data = b.split(":")[1].split(",")
-    chunks = world_data[0].split("\xa76")[0].replace(" \xa7c","")
-    entities = world_data[1].split("\xa76")[0].replace(" \xa7c","")
-    if config:
-        print world_name + ".label " + world_name
-    else:
-        print world_name + ".value " + entities
+    enttype = b[3:].split(" ")[0]
+    if enttype == "World":
+      world_name = b.split(":")[0].split(" ")[1].replace("\"\xc2\xa7c", "").replace("\xc2\xa76\"", "")
+      world_data = b.split(":")[1].split(", ");
+      chunks = world_data[0].replace("\xc2\xa7c", "").replace("\xc2\xa76 chunks", "")
+      entities = world_data[1].replace("\xc2\xa7c", "").replace("\xc2\xa76 entities", "")
+      tiles = world_data[2].replace("\xc2\xa7c", "").replace("\xc2\xa76 tiles.", "")
+      if config:
+          print world_name + ".label " + world_name
+      else:
+          print world_name + ".value " + entities

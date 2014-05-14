@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/local/bin/python
+# Change to /usr/bin/env python if other os than FreeBSD
 import sys
 import os
 import socket
@@ -80,9 +81,6 @@ if len(sys.argv) > 1:
         print "users.label Users"
         config = True
 else:
-     match = re.match('There are (?P<cur>\d+)/(?P<max>\d+) players online:', a)
+     match = re.match('\xc2\xa76There are \xc2\xa7c(?P<cur>\d+)\xc2\xa76 out of maximum \xc2\xa7c(?P<max>\d+)\xc2\xa76 players online.', a)
      if match:
          print 'maxusers.value {max}\nusers.value {cur}'.format(**match.groupdict())
-
-
-
