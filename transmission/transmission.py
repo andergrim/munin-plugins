@@ -30,10 +30,25 @@ See http://pypi.python.org/pypi/transmissionrpc/
         env.user transmission
         env.pass secret
 
+When running multiple daemons on the same machine:
+
+    [transmission-1]
+        env.host 10.0.0.1
+        env.port 9091
+        env.user transmission
+        env.pass secret
+
+    [transmission-2]
+        env.host 10.0.0.1
+        env.port 9092
+        env.user transmission
+        env.pass secret
+
 
 =head1 AUTHOR
 
 Thomas Leveil
+Kristoffer Andergrim <andergrim@gmail.com>
 
 =head1 LICENSE
 
@@ -70,6 +85,10 @@ find this plugin on github at http://github.com/VolatileMesh/munin-plugins
 =head2 1.1 - 2011/05/29
  
     fix transmission error handling
+
+=head3 1.2 - 2014/05/15
+
+    Implemented support for multiple daemons.
     
 =cut
 """
