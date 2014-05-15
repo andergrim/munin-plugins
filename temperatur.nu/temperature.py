@@ -17,8 +17,7 @@ This plugin requires python and ...
 
 =head1 CONFIGURATION
 
-	Symlink this file in your plugins directory 
-	like so:
+	Symlink this file in your plugins directory like so:
 
 	ln -s /usr/local/share/munin/plugins/temperature.py /usr/local/etc/munin/plugins/temperature_partille
 	ln -s /usr/local/share/munin/plugins/temperature.py /usr/local/etc/munin/plugins/temperature_sodra_savedalen
@@ -34,7 +33,7 @@ This plugin requires python and ...
 	    env.hostname weather.misc.
 	    env.category sensors
 	    
-        If hostname is set you will need to configure the check in your main munin.conf like so:
+        If hostname is set you will need to configure the check in your main munin.conf:
         
         [weather.misc.]
             address 127.0.0.1
@@ -74,13 +73,13 @@ find this plugin on github at https://github.com/andergrim/munin-plugins
 
 =head1 CHANGELOG
 
-=head2 1.0 - 2014-05-15
+=head2 1.0 - 2014-05-16
  
     first release
   
 =cut
 """
-__version__ = '1.2'
+__version__ = '1.0'
 
 import os, sys, urllib, re
 from string import Template
