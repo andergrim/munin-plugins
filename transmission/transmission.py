@@ -98,7 +98,6 @@ __version__ = '1.2'
 import os, sys
 from string import Template
 
-#plugin_name=list(os.path.split(sys.argv[0]))[1]
 host = os.getenv('host','localhost')
 port = os.getenv('port',9091)
 user = os.getenv('user')
@@ -154,6 +153,7 @@ def autoconf():
     except ImportError:
         print 'no python module \'transmissionrpc\' missing'
 
+    sys.exit(0)
 
 
 def fetch():
