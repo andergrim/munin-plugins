@@ -74,7 +74,7 @@ find this plugin on github at http://github.com/VolatileMesh/munin-plugins
 
 =head1 VERSION
 
-    1.1
+    1.2
 
 =head1 CHANGELOG
 
@@ -86,13 +86,13 @@ find this plugin on github at http://github.com/VolatileMesh/munin-plugins
  
     fix transmission error handling
 
-=head3 1.2 - 2014/05/15
+=head2 1.2 - 2014/05/15
 
     Implemented support for multiple daemons.
     
 =cut
 """
-__version__ = '1.1'
+__version__ = '1.2'
 
 
 import os, sys
