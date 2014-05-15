@@ -199,25 +199,11 @@ def print_values_throughput(stats):
         print "up.value %s" % stats.cumulative_stats['uploadedBytes']
     except:
         print "up.value U"
-    
-
-
-def dumpstats():
-    import transmissionrpc
-    try:
-        client = transmissionrpc.Client(host, port=port, user=user, password=passwd)
-    except transmissionrpc.transmission.TransmissionError, err:
-        print err
-        sys.exit(1)
-    stats = client.session_stats(10)
-    print stats
 
     
 if __name__ == '__main__':
     if len(sys.argv)>1 :
-        if sys.argv[1]=="dumpstats" :
-			dumpstats()
-        elif sys.argv[1]=="config" :
+        if sys.argv[1]=="config" :
             config()
         elif sys.argv[1]=="autoconf" :
             autoconf()
