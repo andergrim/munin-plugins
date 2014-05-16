@@ -17,6 +17,8 @@ This plugin requires python and ...
 
 =head1 CONFIGURATION
 
+=head2 Monitoring one location per graph
+
 	Symlink this file in your plugins directory like so:
 
 	ln -s /usr/local/share/munin/plugins/temperature.py /usr/local/etc/munin/plugins/temperature_partille
@@ -39,7 +41,30 @@ This plugin requires python and ...
             address 127.0.0.1
             use_node_name no
             
+=head2 Monitoring multiple locations in one graph
+
+        Symlink this file in your plugins directory like so:
+
+        ln -s /usr/local/share/munin/plugins/temperature.py /usr/local/etc/munin/plugins/temperature
         
+        In your plugin-config.d/plugins.conf, setup locations in a comma separated list:
+        
+        [temperature]
+            env.locations goteborg,kista,malmo,abisko 
+        
+        Other configuration options from the single location example above is applicable when monitoring
+        multiple locations as well.
+
+        In addition you can also provide a unique name for the graph if you wish to have more than one 
+        combined graph:
+        
+        [temperature01]
+            env.locations goteborg,kista,malmo
+            env.name Cities
+            
+        [temperature02]
+            env.locations abisko,kurravaara,lannavaara,nikkaluokta
+            env.name Northern locations
 
 =head1 AUTHOR
 
@@ -69,40 +94,64 @@ find this plugin on github at https://github.com/andergrim/munin-plugins
 
 =head1 VERSION
 
-    1.0
+    1.1
 
 =head1 CHANGELOG
 
-=head2 1.0 - 2014-05-16
+=head2 1.0 - 2014-05-15
  
-    first release
+    First release
+    
+=head2 1.1 - 2014-5-16
+
+    Added support for graphing multiple locations in the same graph
   
 =cut
 """
-__version__ = '1.0'
+__version__ = '1.1'
 
 import os, sys, urllib, re
 from string import Template
 
 plugin_name = list(os.path.split(sys.argv[0]))[1]
-location = plugin_name.split("_")[1]
 hostname = os.getenv("hostname", "")
 category = os.getenv("category", "temperature")
+location_list = os.getenv("locations", "")
+name = os.getenv("name", "")
 
-if location == "":
-    location = "ekholmen"
+if name:
+    graph_name = " (" + name + ")"
+else:
+    graph_name = ""
+
+# Check if we're running in multi location mode or not
+if len(list(plugin_name.split("_"))) == 1:
+    locations = list(location_list.replace(" ", "").split(","))
+    location_title = "Temperature graph" + graph_name
+else:
+    locations = [ plugin_name.split("_")[1] ]
+    location_title = "Temperature for location " + locations[0]
+
+if not locations:
+    locations = [ "ekholmen" ]
+
 
 def config():
-    conf = Template("""graph_title Temperature for location ${location}
+    conf = Template("""graph_title ${location_title}
 graph_vtitle Degrees Celsius
 graph_args --base 1000 -l 0
-graph_category ${category}
-temp.label Temp (C)""")
-
-    print conf.safe_substitute(location = location, category = category, hostname = hostname)
+graph_category ${category}""")
+    print conf.safe_substitute(location_title = location_title, category = category)
 
     if hostname:
         print "host_name " + hostname
+
+
+    if len(locations) == 1:
+        print locations[0] + ".label Temp (C)"
+    else:
+        for location in locations:
+            print location + ".label " + location
 
     sys.exit(0)
    
@@ -119,26 +168,27 @@ def isfloat(value):
 
     
 def fetch():
-    url = "http://www.temperatur.nu/termo/" + location + "/temp.txt"
+
+    for location in locations:
+        url = "http://www.temperatur.nu/termo/" + location + "/temp.txt"
     
-    # Fetch web page for location
-    conn = urllib.urlopen(url)
-    resp = conn.read()
-    conn.close()
+        # Fetch web page for location
+        conn = urllib.urlopen(url)
+        resp = conn.read()
+        conn.close()
 
-    # Remove all whitespace from response
-    pattern = re.compile(r'\s+')
-    value = re.sub(pattern, "", resp)
+        # Remove all whitespace from response
+        pattern = re.compile(r'\s+')
+        value = re.sub(pattern, "", resp)
     
-    print_values(value)
+        print_values(location, value)
 
-
-def print_values(value):
+def print_values(location, value):
     # Test for numberiness and report result accordingly
     if isfloat(value):
-        print "temp.value " + value
+        print location + ".value " + value
     else:
-        print "temp.value U"
+        print location + ".value U"
 
 
 if __name__ == '__main__':
