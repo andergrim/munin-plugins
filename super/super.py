@@ -89,24 +89,26 @@ def config():
     print "multigraph " + plugin_name + "_super"
     print "graph_title Aftonbladet SUPER usage"
     print "graph_vtitle Occurrences"
-    print "graph_args --base 1000"
+    print "graph_args --base 1000 --lower-limit 0"
     print "graph_category " + category
     if hostname:
         print "host_name " + hostname
     print "super.label Super"
     print "super.draw AREA"
+    print "super.type GAUGE"
     print "super.min 0"
     print "\n"
 
     print "multigraph " + plugin_name + "_checkmark"
     print "graph_title Aftonbladet CHECK usage" 
     print "graph_vtitle Occurrences"
-    print "graph_args --base 1000"
+    print "graph_args --base 1000 --lower-limit 0"
     print "graph_category " + category 
     if hostname:
         print "host_name " + hostname
         print "check.label Check"
     print "check.draw AREA"
+    print "check.type GAUGE"
     print "check.min 0"
 
     sys.exit(0)
