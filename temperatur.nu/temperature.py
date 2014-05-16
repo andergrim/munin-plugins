@@ -199,6 +199,7 @@ if __name__ == '__main__':
             autoconf()
         else:
             raise ValueError, "Unknown parameter '%s'" % sys.argv[1]
+            sys.exit(1)
 
 fetch()
 sys.exit(0)
