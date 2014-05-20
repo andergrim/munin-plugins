@@ -105,7 +105,7 @@ providers = [
                 "name":   "Expressen",
                 "colour": "0366A0",
                 "url":    "http://www.expressen.se/",
-                "tags":  [ "a", "span", "p" ] ,
+                "tags":  [ "span", "p" ] ,
                 "check": {
                   "element": "",
                   "attr"   : "text",
